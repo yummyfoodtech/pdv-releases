@@ -3,15 +3,88 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Yummy PDV — download</title>
+<title>Baixar o Yummy PDV</title>
+<meta name="description" content="Instaladores do Yummy PDV para macOS e Windows.">
 <style>
-  body { font-family: system-ui, -apple-system, sans-serif; max-width: 640px;
-         margin: 0 auto; padding: 80px 24px; color: #1c1917; line-height: 1.6; }
-  h1 { color: #e07a3f; }
+  :root { --brasa:#e07a3f; --petroleo:#1d4351; --linho:#fbf6f0; --ink:#1c1917; --line:#e8e4dc; --mute:#6b6560; }
+  * { box-sizing: border-box; }
+  body { font-family: system-ui, -apple-system, "Segoe UI", sans-serif; margin: 0;
+         color: var(--ink); background: var(--linho); line-height: 1.6; }
+  .wrap { max-width: 680px; margin: 0 auto; padding: 56px 20px 96px; }
+  h1 { font-size: 2rem; margin: 0 0 4px; }
+  .sub { color: var(--mute); margin: 0 0 40px; }
+  .card { background: #fff; border: 1px solid var(--line); border-radius: 14px;
+          padding: 24px; margin-bottom: 16px; }
+  .card.dim { opacity: .62; }
+  .card h2 { margin: 0 0 4px; font-size: 1.15rem; }
+  .card p { margin: 0 0 16px; color: var(--mute); font-size: .93rem; }
+  .btn { display: block; text-align: center; background: var(--brasa); color: #fff;
+         text-decoration: none; font-weight: 700; padding: 15px 20px; border-radius: 10px;
+         font-size: 1.05rem; }
+  .btn:hover { background: #c96830; }
+  .btn.alt { background: #fff; color: var(--petroleo); border: 1.5px solid var(--line);
+             font-weight: 600; margin-top: 10px; font-size: .95rem; padding: 12px 20px; }
+  .btn.alt:hover { border-color: var(--brasa); color: var(--brasa); }
+  details { background: #fff; border: 1px solid var(--line); border-radius: 14px;
+            padding: 18px 24px; margin-top: 32px; }
+  summary { cursor: pointer; font-weight: 700; }
+  code { background: var(--ink); color: #f6e7d8; padding: 2px 7px; border-radius: 5px;
+         font-size: .86em; word-break: break-all; }
+  footer { margin-top: 40px; color: var(--mute); font-size: .84rem; text-align: center; }
+  footer a { color: #b85c1f; }
 </style>
 </head>
 <body>
+<div class="wrap">
   <h1>Yummy PDV</h1>
-  <p>Nenhuma versão publicada ainda. Volte em breve.</p>
+  <p class="sub">Versão 0.0.62-alpha.0 &middot; publicada em 08 de agosto de 2026</p>
+
+  <div class="card" id="card-mac">
+    <h2>Mac</h2>
+    <p>Escolha conforme o processador do seu Mac. Em dúvida, veja no menu&nbsp;&#63743; &rarr; Sobre este Mac.</p>
+    <a class="btn" href="https://github.com/yummyfoodtech/pdv-releases/releases/download/v0.0.62-alpha.0/Yummy.PDV-0.0.62-alpha.0-arm64.dmg">Baixar para Mac (Apple Silicon)</a>
+    <a class="btn alt" href="https://github.com/yummyfoodtech/pdv-releases/releases/download/v0.0.62-alpha.0/Yummy.PDV-0.0.62-alpha.0-x64.dmg">Baixar para Mac (Intel)</a>
+  </div>
+
+  <div class="card" id="card-win">
+    <h2>Windows</h2>
+    <p>Compatível com Windows 10 e 11 de 64&nbsp;bits.</p>
+    <a class="btn" href="https://github.com/yummyfoodtech/pdv-releases/releases/download/v0.0.62-alpha.0/Yummy.PDV-0.0.62-alpha.0-Setup.exe">Baixar para Windows</a>
+  </div>
+
+  <details>
+    <summary>O sistema disse que o aplicativo é perigoso. E agora?</summary>
+    <p>O Yummy PDV ainda não tem assinatura digital registrada, então o Mac e o
+       Windows avisam antes de abrir. O aplicativo é seguro — o aviso é sobre o
+       registro da assinatura, não sobre o conteúdo.</p>
+    <p><strong>No Mac</strong>, se aparecer que o aplicativo “está danificado”:
+       arraste o Yummy PDV para a pasta Aplicativos, abra o app Terminal e cole
+       esta linha, seguida de Enter:</p>
+    <p><code>xattr -dr com.apple.quarantine "/Applications/Yummy PDV.app"</code></p>
+    <p><strong>No Windows</strong>, se aparecer a tela azul “O Windows protegeu o
+       computador”: clique em <strong>Mais informações</strong> e depois em
+       <strong>Executar assim mesmo</strong>.</p>
+  </details>
+
+  <footer>
+    <a href="https://github.com/yummyfoodtech/pdv-releases/releases">Todas as versões</a>
+    &middot; <a href="https://yummyfood.com.br">yummyfood.com.br</a>
+  </footer>
+</div>
+
+<script>
+  // Reordena para deixar o sistema do visitante primeiro. Nunca esconde o
+  // outro: a detecção erra (iPad em modo desktop, Windows on ARM), e um botão
+  // escondido por engano é um download impossível.
+  (function () {
+    var p = (navigator.userAgentData && navigator.userAgentData.platform) || navigator.userAgent || "";
+    var isWindows = /Win/i.test(p);
+    if (!isWindows) return;
+    var win = document.getElementById("card-win");
+    var mac = document.getElementById("card-mac");
+    if (win && mac && win.parentNode) win.parentNode.insertBefore(win, mac);
+    if (mac) mac.classList.add("dim");
+  })();
+</script>
 </body>
 </html>
